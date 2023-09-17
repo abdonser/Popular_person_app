@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:popular1/Data/cubit/popular_cubit.dart';
+import 'package:popular1/Data/cubit/popular_info_cubit.dart';
 import 'package:popular1/presentaion/screens/home_screen.dart';
 
 void main() {
@@ -8,7 +9,10 @@ void main() {
       providers: [
     BlocProvider<PopularCubit>(
       create: (BuildContext context) => PopularCubit(),
-    )
+    ),
+        BlocProvider<PopularInfoCubit>(
+          create: (BuildContext context) => PopularInfoCubit(),
+        )
   ], child: const MyApp()));
 }
 
@@ -25,7 +29,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home:  HomeScreen(),
     );
   }
 }
+

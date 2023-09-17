@@ -6,13 +6,16 @@ import '../screens/person_details.dart';
 
 class  HomeScreenCard extends StatelessWidget {
   String text;
-    HomeScreenCard({super.key,required this.text});
+  String name;
+  int id;
+
+    HomeScreenCard({super.key,required this.text,required this.id,required this.name});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (builder)=>const PersonDetail()));
+        Navigator.push(context, MaterialPageRoute(builder: (builder)=> PersonDetail(id: id, name: name,)));
       },
       child: Container(
         width: double.infinity,

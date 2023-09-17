@@ -46,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ListView.separated(
                       itemBuilder: (context, i) {
                         return HomeScreenCard(
-                          text:PopularCubit.get(context).popularList[i].name,
-                        );
+                          text:PopularCubit.get(context).popularList[i].name, id: PopularCubit.get(context).popularList[i].id, name: PopularCubit.get(context).popularList[i].name,                        );
                       },
                       separatorBuilder: (context, i) {
                         return const SizedBox(

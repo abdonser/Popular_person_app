@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:popular1/Data/cubit/popular_info_cubit.dart';
 import 'package:popular1/app/app_colors.dart';
+import 'package:popular1/app/app_constant.dart';
 import 'package:popular1/app/app_words.dart';
 
 import '../../Data/cubit/popular_cubit.dart';
 import 'image_review.dart';
 
 class PersonDetail extends StatefulWidget {
-  const PersonDetail({super.key});
+  int id;
+  String name;
+   PersonDetail({super.key,required this.id,required this.name});
 
   @override
   State<PersonDetail> createState() => _PersonDetailState();
@@ -15,25 +19,32 @@ class PersonDetail extends StatefulWidget {
 
 class _PersonDetailState extends State<PersonDetail> {
   @override
+  void initState() {
+    PopularInfoCubit.get(context).getPopularInfo(id: widget.id);
+    PopularInfoCubit.get(context).getPopularImage(id: widget.id);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:  Text(
           AppWords.detailsAbout,
-          style: TextStyle(color: AppColors.WColor),
+          style: const TextStyle(color: AppColors.WColor),
         ),
         centerTitle: true,
         backgroundColor: AppColors.mainColor,
         iconTheme: const IconThemeData(color: AppColors.WColor),
       ),
-      body: BlocConsumer<PopularCubit, PopularState>(
+      body: BlocConsumer<PopularInfoCubit, PopularInfoState>(
         listener: (context, state) {
+         state is PopularInfoError? debugPrint("an errorr"):null;
           // TODO: implement listener
         },
         builder: (context, state) {
-          return state is PopularLoading
+          return state is PopularInfoLoading||state is PopularImagesLoading
               ? const Center(
                   child: CircularProgressIndicator(
                   color: AppColors.mainColor,
@@ -51,32 +62,32 @@ class _PersonDetailState extends State<PersonDetail> {
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(15),
                                   bottomRight: Radius.circular(15))),
-                          child: const Column(
+                          child:  Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                               "",
-                                style: TextStyle(
+                              Text("${PopularInfoCubit.get(context).popularInfoModel.placeOfBirth}"
+                           ,
+                                style: const TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                               Text(
+                                "${PopularInfoCubit.get(context).popularInfoModel.birthday}",
+                                style: const TextStyle(
                                     fontSize: 18, color: AppColors.WColor),
                               ),
                               Text(
-                                "data",
-                                style: TextStyle(
+                                "${PopularInfoCubit.get(context).popularInfoModel.knownForDepartment}",
+                                style: const TextStyle(
                                     fontSize: 18, color: AppColors.WColor),
                               ),
                               Text(
-                                "data",
-                                style: TextStyle(
+                                "${PopularInfoCubit.get(context).popularInfoModel.alsoKnownAs?.first}",
+                                style: const TextStyle(
                                     fontSize: 18, color: AppColors.WColor),
                               ),
                               Text(
-                                "data",
-                                style: TextStyle(
-                                    fontSize: 18, color: AppColors.WColor),
-                              ),
-                              Text(
-                                "data",
-                                style: TextStyle(
+                                "${PopularInfoCubit.get(context).popularInfoModel.popularity}",
+                                style: const TextStyle(
                                     fontSize: 18, color: AppColors.WColor),
                               ),
                             ],
@@ -93,9 +104,9 @@ class _PersonDetailState extends State<PersonDetail> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (builder) =>
-                                                  const ImageReview()));
+                                                   ImageReview(path: PopularInfoCubit.get(context).popularImages.profiles![i].filePath!,)));
                                     },
-                                    child: Image.network(""
+                                    child: Image.network(AppConstant.imageBseUrl+PopularInfoCubit.get(context).popularImages.profiles![i].filePath!
                                 ),
                                 );
                               },
@@ -104,7 +115,7 @@ class _PersonDetailState extends State<PersonDetail> {
                                   height: 15,
                                 );
                               },
-                              itemCount: 20),
+                              itemCount: PopularInfoCubit.get(context).popularImages.profiles!.length),
                         )
                       ],
                     ),
