@@ -7,6 +7,7 @@ import '../../Domain/model/PopularList.dart';
 part 'popular_state.dart';
 
 class PopularCubit extends Cubit<PopularState> {
+  //to facilitate call this cubit class by: classname.get(context).the thing do you need
   static PopularCubit get(context)=>BlocProvider.of(context);
   PopularCubit() : super(PopularInitial());
   List<Result>popularList=[];

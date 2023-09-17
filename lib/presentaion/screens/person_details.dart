@@ -15,12 +15,8 @@ class PersonDetail extends StatefulWidget {
 
 class _PersonDetailState extends State<PersonDetail> {
   @override
-  void initState() {
-    PopularCubit.get(context).getPopular();
-    super.initState();
-  }
+
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -33,59 +29,89 @@ class _PersonDetailState extends State<PersonDetail> {
         iconTheme: const IconThemeData(color: AppColors.WColor),
       ),
       body: BlocConsumer<PopularCubit, PopularState>(
-  listener: (context, state) {
-    // TODO: implement listener
-  },
-  builder: (context, state) {
-    return state is PopularLoading?const Center(child: CircularProgressIndicator(
-      color: AppColors.mainColor,
-    )):  Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 2 - 40,
-                decoration: const BoxDecoration(
+        listener: (context, state) {
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return state is PopularLoading
+              ? const Center(
+                  child: CircularProgressIndicator(
                   color: AppColors.mainColor,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        bottomRight: Radius.circular(15))),
-                child:  Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Text(PopularCubit.get(context).popularList[1].knownForDepartment.name,style: const TextStyle(fontSize: 18,color: AppColors.WColor),),
-                  const Text("data",style: TextStyle(fontSize: 18,color: AppColors.WColor),),
-                  const Text("data",style: TextStyle(fontSize: 18,color: AppColors.WColor),),
-                  const Text("data",style: TextStyle(fontSize: 18,color: AppColors.WColor),),
-                  const Text("data",style: TextStyle(fontSize: 18,color: AppColors.WColor),),
-
-                ],),
-              ),
-               SizedBox(
-                height: MediaQuery.of(context).size.height / 2 - 40,
-                child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-
-                    itemBuilder: (context,i){
-                  return InkWell(
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder: (builder)=>const ImageReview()));
-                    },
-                      child: Image.network(PopularCubit.get(context).popularList[i].profilePath));
-                },
-                    separatorBuilder: (context,i){
-                  return const SizedBox(height: 15,);
-                    },
-                    itemCount: 20),
-              )
-            ],
-          ),
-        ),
-      );
-  },
-),
+                ))
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height / 2 - 40,
+                          decoration: const BoxDecoration(
+                              color: AppColors.mainColor,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15))),
+                          child: const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                               "",
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                              Text(
+                                "data",
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                              Text(
+                                "data",
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                              Text(
+                                "data",
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                              Text(
+                                "data",
+                                style: TextStyle(
+                                    fontSize: 18, color: AppColors.WColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 2 - 40,
+                          child: ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, i) {
+                                return InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (builder) =>
+                                                  const ImageReview()));
+                                    },
+                                    child: Image.network(""
+                                ),
+                                );
+                              },
+                              separatorBuilder: (context, i) {
+                                return const SizedBox(
+                                  height: 15,
+                                );
+                              },
+                              itemCount: 20),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+        },
+      ),
     );
   }
 }
